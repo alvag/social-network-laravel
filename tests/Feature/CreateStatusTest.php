@@ -37,14 +37,46 @@ class CreateStatusTest extends TestCase
     /** @test */
     function guests_users_cant_not_create_statuses()
     {
-//        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $response = $this->post(route('statuses.store'), [
             'body' => 'Mi primer estado'
         ]);
 
-        dd();
-
         $response->assertRedirect('login');
+    }
+
+    /** @test */
+    function a_status_require_a_body()
+    {
+        //$this->withoutExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('statuses.store'), ['body' => '']);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonStructure([
+            'message', 'errors' => ['body']
+        ]);
+    }
+
+    /** @test */
+    function a_status_body_requires_a_minimum_length()
+    {
+        // $this->withoutExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('statuses.store'), ['body' => 'abcd']);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonStructure([
+            'message', 'errors' => ['body']
+        ]);
     }
 }

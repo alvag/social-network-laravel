@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StatusesController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::post('statuses', [StatusesController::class, 'store'])
     ->name('statuses.store')->middleware('auth');
+
