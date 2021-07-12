@@ -18,6 +18,6 @@ Auth::routes();
 
 Route::view('/', 'welcome')->name('home');
 
-Route::post('statuses', [StatusesController::class, 'store'])
-    ->name('statuses.store')->middleware('auth');
+Route::get('statuses', [StatusesController::class, 'index'])->name('statuses.index');
+Route::post('statuses', [StatusesController::class, 'store'])->name('statuses.store')->middleware('auth');
 
