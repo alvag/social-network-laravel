@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\HigherOrderCollectionProxy;
 
+/**
+ * @property string name
+ * @property mixed avatar
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
