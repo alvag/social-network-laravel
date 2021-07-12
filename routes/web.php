@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
 
 Route::view('/', 'welcome');
 
 Route::post('statuses', [StatusesController::class, 'store'])
     ->name('statuses.store')->middleware('auth');
 
+Auth::routes();
