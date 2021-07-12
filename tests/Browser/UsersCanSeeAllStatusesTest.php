@@ -27,7 +27,8 @@ class UsersCanSeeAllStatusesTest extends DuskTestCase
                 ->assertSee($statuses->first()->body);
 
             foreach ($statuses as $status) {
-                $browser->assertSee($status->body);
+                $browser->assertSee($status->body)
+                    ->assertSee($status->user->name);
             }
         });
     }

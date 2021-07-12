@@ -1871,7 +1871,7 @@ __webpack_require__.r(__webpack_exports__);
         body: this.body
       }).then(function (res) {
         _this.body = '';
-        EventBus.$emit('status-created', res.data);
+        EventBus.$emit('status-created', res.data.data);
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -37647,7 +37647,29 @@ var render = function() {
     _vm._l(_vm.statuses, function(status) {
       return _c("div", { staticClass: "card shadow-sm border-0 mb-3" }, [
         _c("div", { staticClass: "card-body d-flex flex-column" }, [
-          _vm._m(0, true),
+          _c("div", { staticClass: "d-flex align-items-center mb-3" }, [
+            _c("img", {
+              staticClass: "rounded mr-3 shadow-sm",
+              attrs: {
+                width: "40",
+                src:
+                  "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png",
+                alt: "avatar"
+              }
+            }),
+            _vm._v(" "),
+            _c("div", [
+              _c("h5", {
+                staticClass: "mb-1",
+                domProps: { textContent: _vm._s(status.user_name) }
+              }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "small text-muted",
+                domProps: { textContent: _vm._s(status.ago) }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c("p", {
             staticClass: "card-text text-secondary",
@@ -37659,32 +37681,7 @@ var render = function() {
     0
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex align-items-center mb-3" }, [
-      _c("img", {
-        staticClass: "rounded mr-3 shadow-sm",
-        attrs: {
-          width: "40",
-          src:
-            "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png",
-          alt: "avatar"
-        }
-      }),
-      _vm._v(" "),
-      _c("div", [
-        _c("h5", { staticClass: "mb-1" }, [_vm._v("Max Alva")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "small text-muted" }, [
-          _vm._v("Hace una hora")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

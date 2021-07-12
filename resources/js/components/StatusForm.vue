@@ -22,7 +22,7 @@ export default {
             axios.post('/statuses', {body: this.body})
                 .then(res => {
                     this.body = '';
-                    EventBus.$emit('status-created', res.data)
+                    EventBus.$emit('status-created', res.data.data)
                 })
                 .catch(error => {
                     console.log(error.response.data);

@@ -7,8 +7,8 @@
                          src="https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png"
                          alt="avatar">
                     <div>
-                        <h5 class="mb-1">Max Alva</h5>
-                        <div class="small text-muted">Hace una hora</div>
+                        <h5 class="mb-1" v-text="status.user_name"></h5>
+                        <div class="small text-muted" v-text="status.ago"></div>
                     </div>
                 </div>
                 <p class="card-text text-secondary" v-text="status.body"></p>

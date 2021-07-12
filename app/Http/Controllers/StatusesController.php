@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StatusResource;
 use App\Models\Status;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class StatusesController extends Controller
 {
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        return Status::latest()->paginate();
+        return StatusResource::collection(Status::latest()->paginate());
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): StatusResource
     {
         request()->validate(['body' => 'required|min:5']);
 
@@ -23,6 +25,6 @@ class StatusesController extends Controller
             'user_id' => auth()->user()->id
         ]);
 
-        return response()->json(['body' => $status->body]);
+        return StatusResource::make($status);
     }
 }

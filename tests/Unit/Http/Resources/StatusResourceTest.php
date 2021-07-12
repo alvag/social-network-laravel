@@ -28,7 +28,7 @@ class StatusResourceTest extends TestCase
         $this->assertEquals($status->user->name, $statusResource['user_name']);
         $this->assertEquals('https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png', $statusResource['user_avatar']);
         $this->assertEquals($status->created_at->diffForHumans(), $statusResource['ago']);
-        
+
 //        $this->assertArrayHasKey('body', $statusResource);
 //        $this->assertArrayHasKey('user_name', $statusResource);
 //        $this->assertArrayHasKey('user_avatar', $statusResource);
