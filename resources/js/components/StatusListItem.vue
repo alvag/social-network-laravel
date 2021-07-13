@@ -27,6 +27,7 @@
             </form>
 
             <div v-for="comment in comments">
+                {{ comment.user_name }}
                 {{ comment.body }}
             </div>
         </div>
