@@ -35,6 +35,13 @@ class Status extends Model
         ]);
     }
 
+    public function unlike()
+    {
+        $this->likes()->where([
+            'user_id' => auth()->id()
+        ])->delete();
+    }
+
     public function isLiked(): bool
     {
         return $this->likes()->where('user_id', auth()->id())->exists();

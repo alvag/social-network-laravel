@@ -12,9 +12,21 @@
                     </div>
                 </div>
                 <p class="card-text text-secondary" v-text="status.body"></p>
+            </div>
 
-                <button v-if="status.is_liked" dusk="like-btn" @click="like(status)">TE GUSTA</button>
-                <button v-else dusk="like-btn" @click="like(status)">ME GUSTA</button>
+            <div class="card-footer p-2">
+                <button v-if="status.is_liked"
+                        class="btn btn-sm btn-link" dusk="unlike-btn" @click="unlike(status)">
+                    <strong>
+                        <i class="fa fa-thumbs-up text-primary mr-1"></i>
+                        TE GUSTA
+                    </strong>
+                </button>
+                <button v-else
+                        class="btn btn-sm btn-link" dusk="like-btn" @click="like(status)">
+                    <i class="far fa-thumbs-up text-primary mr-1"></i>
+                    ME GUSTA
+                </button>
             </div>
         </div>
     </div>
@@ -41,8 +53,19 @@ export default {
     methods: {
         like(status) {
             axios.post(`statuses/${status.id}/likes`)
-                .then(res => {
+                .then(() => {
                     status.is_liked = true;
+                })
+                .catch(error => {
+                    if (error.response.status === 401) {
+                        window.location.href = '/login'
+                    }
+                });
+        },
+        unlike(status) {
+            axios.delete(`statuses/${status.id}/likes`)
+                .then(() => {
+                    status.is_liked = false;
                 })
                 .catch(error => {
                     console.log(error.response.data)

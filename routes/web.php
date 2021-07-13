@@ -29,3 +29,7 @@ Route::post('statuses', [StatusesController::class, 'store'])
 Route::post('statuses/{status}/likes', [StatusLikesController::class, 'store'])
     ->name('statuses.likes.store')
     ->middleware('auth');
+
+Route::delete('statuses/{status}/likes', [StatusLikesController::class, 'destroy'])
+    ->name('statuses.likes.destroy')
+    ->middleware('auth');
