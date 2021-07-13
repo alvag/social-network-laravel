@@ -31,7 +31,12 @@ class Status extends Model
     public function like()
     {
         $this->likes()->firstOrCreate([
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->id()
         ]);
+    }
+
+    public function isLiked(): bool
+    {
+        return $this->likes()->where('user_id', auth()->id())->exists();
     }
 }
