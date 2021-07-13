@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="redirectIfGuest">
         <div class="card shadow-sm border-0 mb-3" v-for="status in statuses">
             <div class="card-body d-flex flex-column">
                 <div class="d-flex align-items-center mb-3">
@@ -27,6 +27,7 @@
                     <i class="far fa-thumbs-up text-primary mr-1"></i>
                     ME GUSTA
                 </button>
+                <span dusk="likes-count">{{ status.likes_count }}</span>
             </div>
         </div>
     </div>
@@ -55,17 +56,17 @@ export default {
             axios.post(`statuses/${status.id}/likes`)
                 .then(() => {
                     status.is_liked = true;
+                    status.likes_count++;
                 })
                 .catch(error => {
-                    if (error.response.status === 401) {
-                        window.location.href = '/login'
-                    }
+                    console.log(error)
                 });
         },
         unlike(status) {
             axios.delete(`statuses/${status.id}/likes`)
                 .then(() => {
                     status.is_liked = false;
+                    status.likes_count--;
                 })
                 .catch(error => {
                     console.log(error.response.data)

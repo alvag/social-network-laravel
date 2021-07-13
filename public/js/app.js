@@ -1933,6 +1933,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -1955,15 +1956,15 @@ __webpack_require__.r(__webpack_exports__);
     like: function like(status) {
       axios.post("statuses/".concat(status.id, "/likes")).then(function () {
         status.is_liked = true;
+        status.likes_count++;
       })["catch"](function (error) {
-        if (error.response.status === 401) {
-          window.location.href = '/login';
-        }
+        console.log(error);
       });
     },
     unlike: function unlike(status) {
       axios["delete"]("statuses/".concat(status.id, "/likes")).then(function () {
         status.is_liked = false;
+        status.likes_count--;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -2084,6 +2085,13 @@ module.exports = {
     },
     isAuthenticated: function isAuthenticated() {
       return !!user.content;
+    }
+  },
+  methods: {
+    redirectIfGuest: function redirectIfGuest() {
+      if (!this.isAuthenticated) {
+        return window.location.href = '/login';
+      }
     }
   }
 };
@@ -37722,6 +37730,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { on: { click: _vm.redirectIfGuest } },
     _vm._l(_vm.statuses, function(status) {
       return _c("div", { staticClass: "card shadow-sm border-0 mb-3" }, [
         _c("div", { staticClass: "card-body d-flex flex-column" }, [
@@ -37787,7 +37796,11 @@ var render = function() {
                   }),
                   _vm._v("\n                ME GUSTA\n            ")
                 ]
-              )
+              ),
+          _vm._v(" "),
+          _c("span", { attrs: { dusk: "likes-count" } }, [
+            _vm._v(_vm._s(status.likes_count))
+          ])
         ])
       ])
     }),
