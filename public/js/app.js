@@ -1857,6 +1857,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -1937,8 +1941,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mixins/auth */ "./resources/js/mixins/auth.js");
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_auth__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -1966,6 +1974,8 @@ Vue.component('statuses-list', __webpack_require__(/*! ./components/StatusesList
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+Vue.mixin((_mixins_auth__WEBPACK_IMPORTED_MODULE_0___default()));
 var app = new Vue({
   el: '#app'
 });
@@ -2021,6 +2031,26 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/mixins/auth.js":
+/*!*************************************!*\
+  !*** ./resources/js/mixins/auth.js ***!
+  \*************************************/
+/***/ ((module) => {
+
+var user = document.head.querySelector('meta[name="user"]');
+module.exports = {
+  computed: {
+    currentUser: function currentUser() {
+      return JSON.parse(user.content);
+    },
+    isAuthenticated: function isAuthenticated() {
+      return !!user.content;
+    }
+  }
+};
 
 /***/ }),
 
@@ -37567,44 +37597,53 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.handleSubmit.apply(null, arguments)
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "card-body" }, [
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.body,
-              expression: "body"
-            }
-          ],
-          staticClass: "form-control border-0 bg-light",
-          attrs: { name: "body", placeholder: "¿Qué estas pensando?" },
-          domProps: { value: _vm.body },
+  return _vm.isAuthenticated
+    ? _c(
+        "form",
+        {
           on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.body = $event.target.value
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.handleSubmit.apply(null, arguments)
             }
           }
-        })
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ]
-  )
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.body,
+                  expression: "body"
+                }
+              ],
+              staticClass: "form-control border-0 bg-light",
+              attrs: {
+                name: "body",
+                placeholder: "¿Qué estas pensando " + _vm.currentUser.name + "?"
+              },
+              domProps: { value: _vm.body },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.body = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      )
+    : _c("div", { staticClass: "card-body" }, [
+        _c("a", { staticClass: "btn btn-primary", attrs: { href: "/login" } }, [
+          _vm._v("Debes iniciar sesión")
+        ])
+      ])
 }
 var staticRenderFns = [
   function() {
@@ -49906,6 +49945,18 @@ Vue.compile = compileToFunctions;
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	
