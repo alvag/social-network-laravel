@@ -22,7 +22,9 @@ window.Vue = require('vue').default;
 window.EventBus = new Vue();
 
 Vue.component('status-form', require('./components/StatusForm').default);
-Vue.component('statuses-list', require('./components/StatusesList').default);
+Vue.component('status-list', require('./components/StatusList').default);
+Vue.component('status-list-item', require('./components/StatusListItem').default);
+Vue.component('like-btn', require('./components/LikeBtn').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static create(array $array)
  * @method static paginate()
  * @method static latest()
+ * @property integer id
  */
 class Status extends Model
 {
@@ -26,6 +27,11 @@ class Status extends Model
     public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function like()
