@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentLikesController;
 use App\Http\Controllers\StatusCommentsController;
 use App\Http\Controllers\StatusesController;
 use App\Http\Controllers\StatusLikesController;
@@ -37,4 +38,8 @@ Route::delete('statuses/{status}/likes', [StatusLikesController::class, 'destroy
 
 Route::post('statuses/{status}/comments', [StatusCommentsController::class, 'store'])
     ->name('statuses.comments.store')
+    ->middleware('auth');
+
+Route::post('comments/{comment}/likes', [CommentLikesController::class, 'store'])
+    ->name('comments.likes.store')
     ->middleware('auth');
