@@ -2,10 +2,11 @@
     <form @submit.prevent="handleSubmit" v-if="isAuthenticated">
         <div class="card-body">
             <textarea v-model="body" class="form-control border-0 bg-light" name="body"
-                      :placeholder="`¿Qué estas pensando ${currentUser.name}?`"></textarea>
+                      required :placeholder="`¿Qué estas pensando ${currentUser.name}?`">
+            </textarea>
         </div>
         <div class="card-footer">
-            <button class="btn btn-primary" id="create-status">
+            <button class="btn btn-primary" id="create-status" :disabled="!body">
                 <i class="fa fa-paper-plane mr-1"></i>
                 Publicar
             </button>

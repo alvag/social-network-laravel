@@ -3,7 +3,7 @@
         <div class="card-body d-flex flex-column">
             <div class="d-flex align-items-center mb-3">
                 <img class="rounded mr-3 shadow-sm" width="40"
-                     src="https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png"
+                     :src="status.user_avatar"
                      alt="avatar">
                 <div>
                     <h5 class="mb-1" v-text="status.user_name"></h5>
@@ -21,15 +21,36 @@
                 <span dusk="likes-count">{{ status.likes_count }}</span>
             </div>
 
-            <form @submit.prevent="addComment">
-                <textarea name="comment" v-model="newComment"></textarea>
-                <button dusk="comment-btn">Enviar</button>
-            </form>
-
-            <div v-for="comment in comments">
-                {{ comment.user_name }}
-                {{ comment.body }}
+        </div>
+        <div class="card-footer">
+            <div v-for="comment in comments" class="mb-3">
+                <img width="34" class="rounded shadow-sm float-left mr-2" :src="comment.user_avatar"
+                     :alt="comment.user_name">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-2 text-secondary">
+                        <a href="#"><strong>{{ comment.user_name }}</strong></a>
+                        {{ comment.body }}
+                    </div>
+                </div>
             </div>
+
+            <form @submit.prevent="addComment" v-if="isAuthenticated">
+                <div class="d-flex align-items-center">
+                    <img width="34" class="rounded shadow-sm mr-2"
+                         src="https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png"
+                         :alt="currentUser.name">
+                    <div class="input-group">
+                        <textarea v-model="newComment"
+                                  class="form-control border-0 shadow-sm"
+                                  name="comment" placeholder="Escribe un comentario..."
+                                  rows="1" required>
+                        </textarea>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" dusk="comment-btn" :disabled="!newComment">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </template>

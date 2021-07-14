@@ -1919,6 +1919,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2003,6 +2004,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _LikeBtn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LikeBtn */ "./resources/js/components/LikeBtn.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37977,6 +37999,7 @@ var render = function() {
               staticClass: "form-control border-0 bg-light",
               attrs: {
                 name: "body",
+                required: "",
                 placeholder: "¿Qué estas pensando " + _vm.currentUser.name + "?"
               },
               domProps: { value: _vm.body },
@@ -37991,7 +38014,19 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "card-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { id: "create-status", disabled: !_vm.body }
+              },
+              [
+                _c("i", { staticClass: "fa fa-paper-plane mr-1" }),
+                _vm._v("\n            Publicar\n        ")
+              ]
+            )
+          ])
         ]
       )
     : _c("div", { staticClass: "card-body" }, [
@@ -38000,23 +38035,7 @@ var render = function() {
         ])
       ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { id: "create-status" } },
-        [
-          _c("i", { staticClass: "fa fa-paper-plane mr-1" }),
-          _vm._v("\n            Publicar\n        ")
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38079,12 +38098,7 @@ var render = function() {
       _c("div", { staticClass: "d-flex align-items-center mb-3" }, [
         _c("img", {
           staticClass: "rounded mr-3 shadow-sm",
-          attrs: {
-            width: "40",
-            src:
-              "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png",
-            alt: "avatar"
-          }
+          attrs: { width: "40", src: _vm.status.user_avatar, alt: "avatar" }
         }),
         _vm._v(" "),
         _c("div", [
@@ -38121,55 +38135,110 @@ var render = function() {
           _c("span", { attrs: { dusk: "likes-count" } }, [
             _vm._v(_vm._s(_vm.status.likes_count))
           ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.addComment.apply(null, arguments)
-              }
-            }
-          },
-          [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.newComment,
-                  expression: "newComment"
-                }
-              ],
-              attrs: { name: "comment" },
-              domProps: { value: _vm.newComment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.newComment = $event.target.value
-                }
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-footer" },
+      [
+        _vm._l(_vm.comments, function(comment) {
+          return _c("div", { staticClass: "mb-3" }, [
+            _c("img", {
+              staticClass: "rounded shadow-sm float-left mr-2",
+              attrs: {
+                width: "34",
+                src: comment.user_avatar,
+                alt: comment.user_name
               }
             }),
             _vm._v(" "),
-            _c("button", { attrs: { dusk: "comment-btn" } }, [_vm._v("Enviar")])
-          ]
-        ),
-        _vm._v(" "),
-        _vm._l(_vm.comments, function(comment) {
-          return _c("div", [
-            _vm._v(
-              "\n            " +
-                _vm._s(comment.user_name) +
-                "\n            " +
-                _vm._s(comment.body) +
-                "\n        "
-            )
+            _c("div", { staticClass: "card border-0 shadow-sm" }, [
+              _c("div", { staticClass: "card-body p-2 text-secondary" }, [
+                _c("a", { attrs: { href: "#" } }, [
+                  _c("strong", [_vm._v(_vm._s(comment.user_name))])
+                ]),
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(comment.body) +
+                    "\n                "
+                )
+              ])
+            ])
           ])
-        })
+        }),
+        _vm._v(" "),
+        _vm.isAuthenticated
+          ? _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.addComment.apply(null, arguments)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "d-flex align-items-center" }, [
+                  _c("img", {
+                    staticClass: "rounded shadow-sm mr-2",
+                    attrs: {
+                      width: "34",
+                      src:
+                        "https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png",
+                      alt: _vm.currentUser.name
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newComment,
+                          expression: "newComment"
+                        }
+                      ],
+                      staticClass: "form-control border-0 shadow-sm",
+                      attrs: {
+                        name: "comment",
+                        placeholder: "Escribe un comentario...",
+                        rows: "1",
+                        required: ""
+                      },
+                      domProps: { value: _vm.newComment },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.newComment = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-append" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: {
+                            dusk: "comment-btn",
+                            disabled: !_vm.newComment
+                          }
+                        },
+                        [_vm._v("Enviar")]
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            )
+          : _vm._e()
       ],
       2
     )
