@@ -2061,6 +2061,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2090,6 +2097,22 @@ __webpack_require__.r(__webpack_exports__);
         _this.comments.push(res.data.data);
       })["catch"](function (error) {
         console.log(error);
+      });
+    },
+    likeComment: function likeComment(comment) {
+      axios.post("/comments/".concat(comment.id, "/likes")).then(function () {
+        comment.is_liked = true;
+        comment.likes_count++;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    unlikeComment: function unlikeComment(comment) {
+      axios["delete"]("/comments/".concat(comment.id, "/likes")).then(function () {
+        comment.is_liked = false;
+        comment.likes_count--;
+      })["catch"](function (error) {
+        console.log(error.response.data);
       });
     }
   }
@@ -38166,7 +38189,37 @@ var render = function() {
                     "\n                "
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _c("span", { attrs: { dusk: "comment-likes-count" } }, [
+              _vm._v(_vm._s(comment.likes_count))
+            ]),
+            _vm._v(" "),
+            comment.is_liked
+              ? _c(
+                  "button",
+                  {
+                    attrs: { dusk: "comment-unlike-btn" },
+                    on: {
+                      click: function($event) {
+                        return _vm.unlikeComment(comment)
+                      }
+                    }
+                  },
+                  [_vm._v("\n                TE GUSTA\n            ")]
+                )
+              : _c(
+                  "button",
+                  {
+                    attrs: { dusk: "comment-like-btn" },
+                    on: {
+                      click: function($event) {
+                        return _vm.likeComment(comment)
+                      }
+                    }
+                  },
+                  [_vm._v("ME GUSTA")]
+                )
           ])
         }),
         _vm._v(" "),

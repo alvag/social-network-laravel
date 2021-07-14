@@ -24,9 +24,12 @@ class CommentResourceTest extends TestCase
 
         $commentResource = CommentResource::make($comment)->resolve();
 
+        $this->assertEquals($comment->id, $commentResource['id']);
         $this->assertEquals($comment->body, $commentResource['body']);
         $this->assertEquals($comment->user->name, $commentResource['user_name']);
         $this->assertEquals('https://www.irishrsa.ie/wp-content/uploads/2017/03/default-avatar-300x300.png', $commentResource['user_avatar']);
+        $this->assertEquals(0, $commentResource['likes_count']);
+        $this->assertEquals(false, $commentResource['is_liked']);
 
 //        $this->assertArrayHasKey('body', $statusResource);
 //        $this->assertArrayHasKey('user_name', $statusResource);

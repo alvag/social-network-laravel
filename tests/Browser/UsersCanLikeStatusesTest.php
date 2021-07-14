@@ -15,8 +15,6 @@ class UsersCanLikeStatusesTest extends DuskTestCase
 
     /**
      * @test
-     *
-     * @return void
      * @throws Throwable
      */
     public function users_can_like_and_unlike_statuses()
