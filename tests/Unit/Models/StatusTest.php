@@ -8,6 +8,7 @@ use App\Models\Status;
 use App\Models\User;
 
 //use PHPUnit\Framework\TestCase;
+use App\Traits\HasLikes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,82 +29,6 @@ class StatusTest extends TestCase
     }
 
     /** @test */
-    function a_status_morph_many_likes()
-    {
-        $status = Status::factory()->create();
-
-        Like::factory()->create([
-            'likeable_id'   => $status->id,
-            'likeable_type' => get_class($status)
-        ]);
-
-        $this->assertInstanceOf(Like::class, $status->likes->first());
-    }
-
-    /** @test */
-    function a_status_can_be_liked_and_unliked()
-    {
-        $status = Status::factory()->create();
-        $user = User::factory()->create();
-
-        $this->actingAs($user);
-
-        $status->like();
-        $this->assertEquals(1, $status->fresh()->likes->count());
-
-        $status->unlike();
-        $this->assertEquals(0, $status->refresh()->likes->count());
-    }
-
-    /** @test */
-    function a_status_can_be_liked_once()
-    {
-        $status = Status::factory()->create();
-        $user = User::factory()->create();
-
-        $this->actingAs($user);
-
-        $status->like();
-        $this->assertEquals(1, $status->likes->count());
-
-        $status->like();
-        $this->assertEquals(1, $status->fresh()->likes->count());
-    }
-
-    /** @test */
-    function a_status_knows_if_it_has_been_liked()
-    {
-        $status = Status::factory()->create();
-
-        $this->assertFalse($status->isLiked());
-
-        $user = User::factory()->create();
-
-        $this->actingAs($user);
-
-        $this->assertFalse($status->isLiked());
-
-        $status->like();
-
-        $this->assertTrue($status->isLiked());
-    }
-
-    /** @test */
-    function a_status_knows_how_many_likes_it_has()
-    {
-        $status = Status::factory()->create();
-
-        $this->assertEquals(0, $status->likesCount());
-
-        Like::factory(2)->create([
-            'likeable_id'   => $status->id,
-            'likeable_type' => get_class($status)
-        ]);
-
-        $this->assertEquals(2, $status->likesCount());
-    }
-
-    /** @test */
     function a_status_has_many_comments()
     {
         $status = Status::factory()->create();
@@ -111,4 +36,11 @@ class StatusTest extends TestCase
 
         $this->assertInstanceOf(Comment::class, $status->comments->first());
     }
+
+    /** @test */
+    function a_status_model_must_use_the_trait_has_likes()
+    {
+        $this->assertClassUsesTrait(HasLikes::class, Status::class);
+    }
+
 }
