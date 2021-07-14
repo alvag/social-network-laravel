@@ -24,11 +24,8 @@ class LikeFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'   => function () {
+            'user_id' => function () {
                 return User::factory()->create();
-            },
-            'status_id' => function () {
-                return Status::factory()->create();
             }
         ];
     }

@@ -43,3 +43,7 @@ Route::post('statuses/{status}/comments', [StatusCommentsController::class, 'sto
 Route::post('comments/{comment}/likes', [CommentLikesController::class, 'store'])
     ->name('comments.likes.store')
     ->middleware('auth');
+
+Route::delete('comments/{comment}/likes', [CommentLikesController::class, 'destroy'])
+    ->name('comments.likes.destroy')
+    ->middleware('auth');
