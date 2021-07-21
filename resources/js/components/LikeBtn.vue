@@ -1,13 +1,13 @@
 <template>
-    <button v-if="status.is_liked"
-            class="btn btn-sm btn-link" dusk="unlike-btn" @click="unlike(status)">
+    <button v-if="model.is_liked"
+            class="btn btn-sm btn-link" dusk="unlike-btn" @click="unlike()">
         <strong>
             <i class="fa fa-thumbs-up text-primary mr-1"></i>
             TE GUSTA
         </strong>
     </button>
     <button v-else
-            class="btn btn-sm btn-link" dusk="like-btn" @click="like(status)">
+            class="btn btn-sm btn-link" dusk="like-btn" @click="like()">
         <i class="far fa-thumbs-up text-primary mr-1"></i>
         ME GUSTA
     </button>
@@ -16,30 +16,36 @@
 <script>
 export default {
     props: {
-        status: {
+        model: {
             type: Object,
+            required: true
+        },
+        url: {
+            type: String,
             required: true
         }
     },
     methods: {
-        like(status) {
-            axios.post(`statuses/${status.id}/likes`)
+        like() {
+            axios.post(`${this.url}/${this.model.id}/likes`)
                 .then(() => {
-                    status.is_liked = true;
-                    status.likes_count++;
+                    this.model.is_liked = true;
+                    this.model.likes_count++;
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error);
+                    window.location.href = '/login'
                 });
         },
-        unlike(status) {
-            axios.delete(`statuses/${status.id}/likes`)
+        unlike() {
+            axios.delete(`${this.url}/${this.model.id}/likes`)
                 .then(() => {
-                    status.is_liked = false;
-                    status.likes_count--;
+                    this.model.is_liked = false;
+                    this.model.likes_count--;
                 })
                 .catch(error => {
-                    console.log(error.response.data)
+                    console.log(error.response.data);
+                    window.location.href = '/login'
                 });
         }
     }

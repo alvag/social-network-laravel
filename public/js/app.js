@@ -1862,26 +1862,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    status: {
+    model: {
       type: Object,
+      required: true
+    },
+    url: {
+      type: String,
       required: true
     }
   },
   methods: {
-    like: function like(status) {
-      axios.post("statuses/".concat(status.id, "/likes")).then(function () {
-        status.is_liked = true;
-        status.likes_count++;
+    like: function like() {
+      var _this = this;
+
+      axios.post("".concat(this.url, "/").concat(this.model.id, "/likes")).then(function () {
+        _this.model.is_liked = true;
+        _this.model.likes_count++;
       })["catch"](function (error) {
         console.log(error);
+        window.location.href = '/login';
       });
     },
-    unlike: function unlike(status) {
-      axios["delete"]("statuses/".concat(status.id, "/likes")).then(function () {
-        status.is_liked = false;
-        status.likes_count--;
+    unlike: function unlike() {
+      var _this2 = this;
+
+      axios["delete"]("".concat(this.url, "/").concat(this.model.id, "/likes")).then(function () {
+        _this2.model.is_liked = false;
+        _this2.model.likes_count--;
       })["catch"](function (error) {
         console.log(error.response.data);
+        window.location.href = '/login';
       });
     }
   }
@@ -2004,6 +2014,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _LikeBtn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LikeBtn */ "./resources/js/components/LikeBtn.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37933,7 +37977,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.status.is_liked
+  return _vm.model.is_liked
     ? _c(
         "button",
         {
@@ -37941,7 +37985,7 @@ var render = function() {
           attrs: { dusk: "unlike-btn" },
           on: {
             click: function($event) {
-              return _vm.unlike(_vm.status)
+              return _vm.unlike()
             }
           }
         },
@@ -37954,7 +37998,7 @@ var render = function() {
           attrs: { dusk: "like-btn" },
           on: {
             click: function($event) {
-              return _vm.like(_vm.status)
+              return _vm.like()
             }
           }
         },
@@ -38150,7 +38194,7 @@ var render = function() {
           "card-footer d-flex justify-content-between align-items-center p-2"
       },
       [
-        _c("like-btn", { attrs: { status: _vm.status } }),
+        _c("like-btn", { attrs: { model: _vm.status, url: "statuses" } }),
         _vm._v(" "),
         _c("div", { staticClass: "text-secondary mr-2" }, [
           _c("i", { staticClass: "far fa-thumbs-up" }),
@@ -38168,7 +38212,7 @@ var render = function() {
       { staticClass: "card-footer" },
       [
         _vm._l(_vm.comments, function(comment) {
-          return _c("div", { staticClass: "mb-3" }, [
+          return _c("div", { key: comment.id, staticClass: "mb-3" }, [
             _c("img", {
               staticClass: "rounded shadow-sm float-left mr-2",
               attrs: {
@@ -38218,7 +38262,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("ME GUSTA")]
+                  [_vm._v("\n                ME GUSTA\n            ")]
                 )
           ])
         }),
@@ -38284,7 +38328,11 @@ var render = function() {
                             disabled: !_vm.newComment
                           }
                         },
-                        [_vm._v("Enviar")]
+                        [
+                          _vm._v(
+                            "\n                            Enviar\n                        "
+                          )
+                        ]
                       )
                     ])
                   ])
